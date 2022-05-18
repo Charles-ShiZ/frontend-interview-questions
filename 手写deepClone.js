@@ -9,9 +9,6 @@ const target = {
   field2: undefined,
   field3: {
     child: 'child',
-    child: {
-      child: 'child',
-    },
   },
   field4: [2, 4, 8],
   fn: () => {},
@@ -23,8 +20,6 @@ const target = {
   ]),
   // target2: target,
 };
-target.tardgsdggds = target;
-target.tardgsdggds.field1 = 123123213;
 
 function typeOf(value) {
   return Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
@@ -33,9 +28,7 @@ function typeOf(value) {
 function cloneObject(object) {
   const newObject = new object.constructor();
   Object.keys(object).forEach((key) => {
-    newObject[key] = !Object.is(object[key], object)
-      ? deepClone(object[key])
-      : object;
+    newObject[key] = deepClone(object[key]);
   });
   return newObject;
 }
@@ -43,7 +36,7 @@ function cloneObject(object) {
 function cloneArray(array) {
   const newArray = new Array();
   array.forEach((item, index) => {
-    newArray[index] = !Object.is(item, array) ? deepClone(item) : array;
+    newArray[index] = deepClone(item);
   });
   return newArray;
 }
@@ -51,10 +44,7 @@ function cloneArray(array) {
 function cloneMap(map) {
   const newMap = new Map();
   Array.from(map.keys()).forEach((key) => {
-    newMap.set(
-      key,
-      !Object.is(map.get(key), map) ? deepClone(map.get(key)) : map
-    );
+    newMap.set(key, deepClone(map.get(key)));
   });
   return newMap;
 }
@@ -62,7 +52,7 @@ function cloneMap(map) {
 function cloneSet(set) {
   const newSet = new Set();
   Array.from(set).forEach((item) => {
-    newSet.add(!Object.is(item, set) ? deepClone(item) : set);
+    newSet.add(deepClone(item));
   });
   return newSet;
 }
